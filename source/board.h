@@ -21,15 +21,25 @@ private:
     Element currentElement;
     int currentElementId = 0; // 0 = empty tile
 
+	int m_backgroundTexture;
+	int m_elementTextures[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT];
+	int m_elementMetrics[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT][2];
+
+	void renderElement();
+
 public:
     Board();
 
+	bool init();
     void clear();
 
-    void render();
+	void render();
+	void renderElement(const Element& element);
 
     void addElement(Element element);
     bool isMovementPossible(Element element, Position newPosition);
+
+	static Board& get();
 };
 
 #endif BOARD_H

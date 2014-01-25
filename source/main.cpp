@@ -1,6 +1,7 @@
 #include "ra_pch.h"
 #include "settings.h"
 #include "engine.h"
+#include "board.h"
 
 Settings g_Settings;
 
@@ -37,13 +38,14 @@ void MouseFunc(int b, int s, int x, int y)
 	
 }
 
-int testTextId = -1;
+//int testTextId = -1;
 void DisplayFunc(void)
 {
 	glClearColor(1.0f, .0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	Engine::get().renderRectangle(testTextId, 0, 0, 1, 1, 0);
+	//Engine::get().renderRectangle(testTextId, 0, 0, 1, 1, 0);
+	Board::get().render();
 	glutSwapBuffers();
 }
 
@@ -121,7 +123,9 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	testTextId = Engine::get().loadTexture("../content/Background.tga", 1, 1);
+
+	//testTextId = Engine::get().loadTexture("../content/Background.tga", 1, 1);
+	Board::get().init();
 
 	//g_cameraController.OnScreenReshape(g_Settings.GetWindowWidth(), g_Settings.GetWindowHeight());
 	/*if(!LoadRC())

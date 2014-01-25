@@ -23,7 +23,7 @@ void Element::setId(int id)
     m_id = id;
 }
 
-Position Element::getPosition()
+Position Element::getPosition() const
 {
     return m_position;
 }

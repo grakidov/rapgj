@@ -14,13 +14,17 @@ enum ELEMENT_ROTATION
     UP,
     RIGHT,
     DOWN,
-    LEFT
+    LEFT,
+	COUNT
 };
 
 struct Position
 {
     int x;
     int y;
+
+	Position() :x(0), y(0){}
+	Position(int _x, int _y) :x(_x), y(_y){}
 };
 
 class Element
@@ -38,8 +42,11 @@ public:
     int getId();
     void setId(int id);
 
-    Position getPosition();
+    Position getPosition() const;
     void setPosition(Position);
+
+	ELEMENT_TYPE getType() const { return m_type; }
+	ELEMENT_ROTATION getRotation() const { return m_rotation; }
 
 	void render();
 };

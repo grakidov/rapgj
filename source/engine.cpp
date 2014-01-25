@@ -244,10 +244,10 @@ bool Engine::renderRectangle(int textureId, int frame, float topX, float topY, f
 	Texture& texture = it->second;
 
 	float posbias [] = {
-		1,
-		1,
-		0,
-		0,
+		(bottomX - topX) / 2.0f,
+		(topY - bottomY) / 2.0f,
+		topX + (bottomX - topX) / 2.0f,
+		bottomY + (topY - bottomY) / 2.0f,
 	};
 
 	float coordbias [] = {
