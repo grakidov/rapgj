@@ -1,5 +1,6 @@
 #include "ra_pch.h"
 #include "settings.h"
+#include "engine.h"
 
 Settings g_Settings;
 
@@ -43,7 +44,7 @@ void DisplayFunc(void)
 
 void CloseFunc()
 {
-
+	Engine::get().shutdown();
 }
 
 int main(int argc, char* argv[])
@@ -96,7 +97,12 @@ int main(int argc, char* argv[])
 	//glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &numFragUniformBlocks);
 	//glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &maxUniformBlockSize);
 
-	std::cout << "OpenGL version = " << glGetString(GL_VERSION) << std::endl;
+	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+
+	if (!Engine::get().init())
+	{
+		return 0;
+	}
 
 	//g_cameraController.OnScreenReshape(g_Settings.GetWindowWidth(), g_Settings.GetWindowHeight());
 

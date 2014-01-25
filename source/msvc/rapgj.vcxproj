@@ -56,15 +56,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../include;../../sdk/OpenAL/include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>ra_pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../libs/windows</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeglut_static.lib;FreeImage.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../libs/windows;../../sdk/OpenAL/libs/Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenAL32.lib;freeglut_static.lib;FreeImage.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,7 +76,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../include;../../sdk/OpenAL/include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>ra_pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\engine.cpp" />
     <ClCompile Include="..\gl3w.cpp" />
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\optionsreader.cpp" />
@@ -98,6 +99,7 @@
     <ClCompile Include="..\settings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\engine.h" />
     <ClInclude Include="..\optionsreader.h" />
     <ClInclude Include="..\ra_pch.h" />
     <ClInclude Include="..\settings.h" />
