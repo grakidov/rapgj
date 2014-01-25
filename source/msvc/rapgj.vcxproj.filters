@@ -30,6 +30,12 @@
     <ClCompile Include="..\gl3w.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\element.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ra_pch.h">
@@ -39,6 +45,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\optionsreader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\board.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\element.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

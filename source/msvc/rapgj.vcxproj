@@ -89,6 +89,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\board.cpp" />
+    <ClCompile Include="..\element.cpp" />
     <ClCompile Include="..\gl3w.cpp" />
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\optionsreader.cpp" />
@@ -98,6 +100,8 @@
     <ClCompile Include="..\settings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\board.h" />
+    <ClInclude Include="..\element.h" />
     <ClInclude Include="..\optionsreader.h" />
     <ClInclude Include="..\ra_pch.h" />
     <ClInclude Include="..\settings.h" />
