@@ -37,9 +37,14 @@ void MouseFunc(int b, int s, int x, int y)
 	
 }
 
+int testTextId = -1;
 void DisplayFunc(void)
 {
-	
+	glClearColor(1.0f, .0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	Engine::get().renderRectangle(testTextId, 0, 0, 1, 1, 0);
+	glutSwapBuffers();
 }
 
 void CloseFunc()
@@ -49,7 +54,19 @@ void CloseFunc()
 
 int main(int argc, char* argv[])
 {	
+	char exePath[512] = { 0 };
+	GetModuleFileNameA(NULL, exePath, 512);
 
+	char dev[512] = { 0 };
+	char dir[512] = { 0 };
+	char file[512] = { 0 };
+	char ext[512] = { 0 };
+	_splitpath_s(exePath, dev, dir, file, ext);
+
+	char exeDir[512] = { 0 };
+	strcpy_s(exeDir, dev);
+	strcat_s(exeDir, dir);
+	SetCurrentDirectoryA(exeDir);
 	glutInitContextVersion(3, 3);
 	glutInitContextProfile(GLUT_CORE_PROFILE);
 #ifdef _DEBUG
@@ -104,8 +121,9 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	//g_cameraController.OnScreenReshape(g_Settings.GetWindowWidth(), g_Settings.GetWindowHeight());
+	testTextId = Engine::get().loadTexture("../content/Background.tga", 1, 1);
 
+	//g_cameraController.OnScreenReshape(g_Settings.GetWindowWidth(), g_Settings.GetWindowHeight());
 	/*if(!LoadRC())
 	{
 		ClearRC();

@@ -3,10 +3,13 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <vector>
+#include <map>
 #include <assert.h>
 
 #include <gl3w.h>
 #include <freeglut.h>
+#include <FreeImage.h>
 
 #include <al.h>
 #include <alc.h>
