@@ -1,4 +1,8 @@
 #include "ra_pch.h"
+
+#include <vector>
+#include <algorithm>
+
 #include "board.h"
 #include "engine.h"
 
@@ -23,7 +27,7 @@ bool Board::init()
 		return false;
 	}
 
-
+    // ELEMENT_TYPE::LONG4
 	m_elementTextures[ELEMENT_TYPE::LONG4][ELEMENT_ROTATION::UP] = Engine::get().loadTexture("../content/block_1_pos1.tga", 1, 1);
 	if (m_elementTextures[ELEMENT_TYPE::LONG4][ELEMENT_ROTATION::UP] == -1)
 	{
@@ -37,7 +41,7 @@ bool Board::init()
 	{
 		return false;
 	}
-
+    
 	m_elementTextures[ELEMENT_TYPE::LONG4][ELEMENT_ROTATION::LEFT] = m_elementTextures[ELEMENT_TYPE::LONG4][ELEMENT_ROTATION::RIGHT];
 
 	m_elementMetrics[ELEMENT_TYPE::LONG4][ELEMENT_ROTATION::UP][0] = 1;
@@ -51,6 +55,93 @@ bool Board::init()
 
 	m_elementMetrics[ELEMENT_TYPE::LONG4][ELEMENT_ROTATION::LEFT][0] = 4;
 	m_elementMetrics[ELEMENT_TYPE::LONG4][ELEMENT_ROTATION::LEFT][1] = 1;
+
+    // ELEMENT_TYPE::CORNER3
+    m_elementTextures[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::UP] = Engine::get().loadTexture("../content/block_2_pos1.tga", 1, 1);
+    if (m_elementTextures[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::UP] == -1)
+    {
+        return false;
+    }
+
+    m_elementTextures[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::DOWN] = Engine::get().loadTexture("../content/block_2_pos3.tga", 1, 1);
+    if (m_elementTextures[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::DOWN] == -1)
+    {
+        return false;
+    }
+
+    m_elementTextures[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::RIGHT] = Engine::get().loadTexture("../content/block_2_pos2.tga", 1, 1);
+    if (m_elementTextures[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::RIGHT] == -1)
+    {
+        return false;
+    }
+
+    m_elementTextures[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::LEFT] = Engine::get().loadTexture("../content/block_2_pos4.tga", 1, 1);
+    if (m_elementTextures[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::LEFT] == -1)
+    {
+        return false;
+    }
+
+    m_elementMetrics[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::UP][0] = 2;
+    m_elementMetrics[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::UP][1] = 2;
+
+    m_elementMetrics[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::DOWN][0] = 2;
+    m_elementMetrics[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::DOWN][1] = 2;
+
+    m_elementMetrics[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::RIGHT][0] = 2;
+    m_elementMetrics[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::RIGHT][1] = 2;
+
+    m_elementMetrics[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::LEFT][0] = 2;
+    m_elementMetrics[ELEMENT_TYPE::CORNER3][ELEMENT_ROTATION::LEFT][1] = 2;
+
+    // ELEMENT_TYPE::SMALL2
+    m_elementTextures[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::UP] = Engine::get().loadTexture("../content/block_3_pos1.tga", 1, 1);
+    if (m_elementTextures[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::UP] == -1)
+    {
+        return false;
+    }
+
+    m_elementTextures[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::DOWN] = m_elementTextures[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::UP];
+
+    m_elementTextures[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::RIGHT] = Engine::get().loadTexture("../content/block_3_pos2.tga", 1, 1);
+    if (m_elementTextures[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::RIGHT] == -1)
+    {
+        return false;
+    }
+
+    m_elementTextures[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::LEFT] = m_elementTextures[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::RIGHT];
+
+    m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::UP][0] = 1;
+    m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::UP][1] = 2;
+
+    m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::DOWN][0] = 1;
+    m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::DOWN][1] = 2;
+
+    m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::RIGHT][0] = 2;
+    m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::RIGHT][1] = 1;
+
+    m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::LEFT][0] = 2;
+    m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::LEFT][1] = 1;
+
+
+    // CUBE
+    m_targetTextures[CUBE_SPRITE_INDEX + 0] = Engine::get().loadTexture("../content/cube.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 1] = Engine::get().loadTexture("../content/cube_sprite_1.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 2] = Engine::get().loadTexture("../content/cube_sprite_2.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 3] = Engine::get().loadTexture("../content/cube_sprite_3.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 4] = Engine::get().loadTexture("../content/cube_sprite_4.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 5] = Engine::get().loadTexture("../content/cube_sprite_5.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 6] = Engine::get().loadTexture("../content/cube_sprite_6.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 7] = Engine::get().loadTexture("../content/cube_sprite_7.tga", 1, 1);
+
+    // PYRAMID
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 0] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 1] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 2] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 3] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 4] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 5] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 6] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 7] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
 
 	return true;
 }
@@ -85,12 +176,25 @@ void Board::renderElement(const Element& element)
 	Engine::get().renderRectangle(textureId, 0, topX, topY, bottomX, bottomY);
 }
 
+/* -> create target class
+ 
+void Board::renderTarget(int spriteIndex, Position position)
+{
+    int textureId = m_targetTextures[spriteIndex];
+
+    float topX = elementLeft;
+    float topY = elementBottom + elementHeight;
+    float bottomX = elementLeft + elementWidth;
+    float bottomY = elementBottom;
+
+    Engine::get().renderRectangle(textureId, 0, topX, topY, bottomX, bottomY);
+}*/
+
 void Board::render()
 {
 	Engine::get().renderRectangle(m_backgroundTexture, 0, -1, 1, 1, -1);
 
-	Element test(ELEMENT_TYPE::LONG4,Position(0,0),ELEMENT_ROTATION::UP);
-	renderElement(test);
+    testAllElements();
 }
 
 void Board::addElement(Element element)
@@ -116,3 +220,63 @@ Board& Board::get()
 
 	return *g_board;
 }
+
+void Board::testAllElements()
+{
+    std::vector<Element> elements;
+
+    elements.push_back(Element(ELEMENT_TYPE::LONG4, Position(1, 4), ELEMENT_ROTATION::UP));
+    elements.push_back(Element(ELEMENT_TYPE::LONG4, Position(3, 4), ELEMENT_ROTATION::DOWN));
+    elements.push_back(Element(ELEMENT_TYPE::LONG4, Position(5, 4), ELEMENT_ROTATION::LEFT));
+    elements.push_back(Element(ELEMENT_TYPE::LONG4, Position(10, 4), ELEMENT_ROTATION::RIGHT));
+    elements.push_back(Element(ELEMENT_TYPE::CORNER3, Position(1, 10), ELEMENT_ROTATION::UP));
+    elements.push_back(Element(ELEMENT_TYPE::CORNER3, Position(4, 10), ELEMENT_ROTATION::DOWN));
+    elements.push_back(Element(ELEMENT_TYPE::CORNER3, Position(7, 10), ELEMENT_ROTATION::LEFT));
+    elements.push_back(Element(ELEMENT_TYPE::CORNER3, Position(10, 10), ELEMENT_ROTATION::RIGHT));
+    elements.push_back(Element(ELEMENT_TYPE::SMALL2, Position(1, 14), ELEMENT_ROTATION::UP));
+    elements.push_back(Element(ELEMENT_TYPE::SMALL2, Position(3, 14), ELEMENT_ROTATION::DOWN));
+    elements.push_back(Element(ELEMENT_TYPE::SMALL2, Position(5, 14), ELEMENT_ROTATION::LEFT));
+    elements.push_back(Element(ELEMENT_TYPE::SMALL2, Position(8, 14), ELEMENT_ROTATION::RIGHT));
+
+    //for_each(elements.begin(), elements.end(), Board::renderElement);
+    for (int i = 0; i < elements.size(); i++)
+        renderElement(elements[i]);
+    
+}
+
+/*
+= Engine::get().loadTexture("../content/block_1_sprite_1_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_1_sprite_1_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_1_sprite_2_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_1_sprite_2_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_1_sprite_3_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_1_sprite_3_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_1_sprite_4_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_1_sprite_4_pos2.tga, 1, 1);
+
+= Engine::get().loadTexture("../content/block_2_sprite_1_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_1_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_1_pos3.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_1_pos4.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_2_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_2_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_2_pos3.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_2_pos4.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_3_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_3_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_3_pos3.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_3_pos4.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_4_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_4_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_4_pos3.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_2_sprite_4_pos4.tga, 1, 1);
+
+= Engine::get().loadTexture("../content/block_3_sprite_1_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_3_sprite_1_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_3_sprite_2_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_3_sprite_2_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_3_sprite_3_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_3_sprite_3_pos2.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_3_sprite_4_pos1.tga, 1, 1);
+= Engine::get().loadTexture("../content/block_3_sprite_4_pos2.tga, 1, 1);
+*/

@@ -14,6 +14,10 @@
 
 #define EMPTY_TILE = 0
 
+#define TARGET_SPRITE_COUNT 16
+#define CUBE_SPRITE_INDEX 0
+#define PYRAMID_SPRITE_INDEX 8
+
 class Board {
 private:
     Element boardArray[BOARD_WIDTH][BOARD_HEIGHT];
@@ -25,7 +29,12 @@ private:
 	int m_elementTextures[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT];
 	int m_elementMetrics[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT][2];
 
+    int m_targetTextures[TARGET_SPRITE_COUNT];
+    int m_targetMetrics[TARGET_SPRITE_COUNT];
+
 	void renderElement();
+
+    void testAllElements();
 
 public:
     Board();
@@ -35,6 +44,7 @@ public:
 
 	void render();
 	void renderElement(const Element& element);
+    void renderTarget(int spriteIndex, Position position);
 
     void addElement(Element element);
     bool isMovementPossible(Element element, Position newPosition);
