@@ -3,15 +3,44 @@
 
 enum ELEMENT_TYPE
 {
-    ELEMENT_01,
-    ELEMENT_02,
-    ELEMENT_03
+    LONG4,
+    CORNER3,
+    SMALL2,
+    EMPTY
+};
+
+enum ELEMENT_ROTATION
+{
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
+};
+
+struct Position
+{
+    int x;
+    int y;
 };
 
 class Element
 {
+private:
+    int m_id;
+    ELEMENT_TYPE m_type;
+    Position m_position;
+    ELEMENT_ROTATION m_rotation;
+
 public:
-	Element();
+    Element();
+	Element(ELEMENT_TYPE type, Position position, ELEMENT_ROTATION rotation);
+
+    int getId();
+    void setId(int id);
+
+    Position getPosition();
+    void setPosition(Position);
+
 	void render();
 };
 

@@ -101,6 +101,7 @@
     <ClCompile Include="..\settings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\element_shapes.h" />
     <ClInclude Include="..\engine.h" />
     <ClInclude Include="..\board.h" />
     <ClInclude Include="..\element.h" />
