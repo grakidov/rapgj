@@ -7,6 +7,7 @@
 #include "engine.h"
 
 #include "element_shapes.h"
+#include "player.h"
 
 Board::Board()
 {
@@ -225,7 +226,13 @@ void Board::testAllElements()
     elements.push_back(Element(ELEMENT_TYPE::CUBE, Position(14, 20), ELEMENT_ROTATION::UP));
     elements.push_back(Element(ELEMENT_TYPE::PYRAMID, Position(42, 20), ELEMENT_ROTATION::UP));
 
-    for (int i = 0; i < elements.size(); i++)
+    Player player_1(PLAYER_ID::PLAYER_1);
+    elements.push_back(player_1.generateElement());
+
+    Player player_2(PLAYER_ID::PLAYER_2);
+    elements.push_back(player_2.generateElement());
+
+    for (unsigned int i = 0; i < elements.size(); i++)
         renderElement(elements[i]);
     
 }

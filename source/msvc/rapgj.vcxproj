@@ -95,6 +95,7 @@
     <ClCompile Include="..\gl3w.cpp" />
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\optionsreader.cpp" />
+    <ClCompile Include="..\player.cpp" />
     <ClCompile Include="..\ra_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
@@ -106,6 +107,7 @@
     <ClInclude Include="..\board.h" />
     <ClInclude Include="..\element.h" />
     <ClInclude Include="..\optionsreader.h" />
+    <ClInclude Include="..\player.h" />
     <ClInclude Include="..\ra_pch.h" />
     <ClInclude Include="..\settings.h" />
   </ItemGroup>
