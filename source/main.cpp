@@ -45,13 +45,19 @@ void DisplayFunc(void)
 	glClearColor(1.0f, .0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	Board::get().render();
+	Board::get().doFrame();
 	glutSwapBuffers();
 }
 
 void CloseFunc()
 {
 	Engine::get().shutdown();
+}
+
+void IdleFunc()
+{
+	// Refresh the Window
+	glutPostRedisplay();
 }
 
 int main(int argc, char* argv[])
@@ -96,6 +102,7 @@ int main(int argc, char* argv[])
 	glutMotionFunc(MotionFunc);
 	glutPassiveMotionFunc(PassiveMotionFunc);
 	glutCloseFunc(CloseFunc);
+	glutIdleFunc(IdleFunc);
 
 	if(gl3wInit())
 	{

@@ -194,6 +194,13 @@ int Engine::loadTexture(const char* fileName, int framesX, int framesY)
 		return false;
 	}
 
+	bool hasAlpha = false;
+	FREE_IMAGE_COLOR_TYPE clrType = FreeImage_GetColorType(originalData);
+	if (clrType == FIC_RGBALPHA)
+	{
+		hasAlpha = true;
+	}
+
 	FIBITMAP* data = FreeImage_ConvertTo32Bits(originalData);
 	FreeImage_Unload(originalData);
 	if (data == nullptr)
@@ -221,6 +228,7 @@ int Engine::loadTexture(const char* fileName, int framesX, int framesY)
 	texture.m_data = nullptr;
 
 	texture.m_id = m_maxTextureId++;
+	texture.m_hasAlpha = hasAlpha;
 	m_textures[texture.m_id] = texture;
 
 	cout << "Loaded texture: " << fileName << texture.m_width << "x" << texture.m_height << endl;

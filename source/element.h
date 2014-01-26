@@ -15,7 +15,7 @@ enum ELEMENT_TYPE
     CORNER3,
     SMALL2,
     CUBE,
-    PYRAMID,
+	PYRAMID,
     EMPTY
 };
 
@@ -56,7 +56,9 @@ public:
     void setPosition(Position);
 
 	ELEMENT_TYPE getType() const { return m_type; }
+
 	ELEMENT_ROTATION getRotation() const { return m_rotation; }
+	void setRotation(ELEMENT_ROTATION rotation) { m_rotation = rotation; }
 
 	void render();
 };

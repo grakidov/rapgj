@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include "element.h"
+#include "Player.h"
 
 #define BOARD_WIDTH 60
 #define BOARD_HEIGHT 32
@@ -48,6 +49,9 @@ private:
 
 	map<int, Element> m_elements;
 
+	Player m_player1;
+	Player m_player2;
+
 	void renderElement();
 
     void testAllElements();
@@ -61,12 +65,16 @@ public:
 	void render();
 	void renderElement(const Element& element);
     void renderTarget(int spriteIndex, Position position);
+	void doFrame();
 
-    void addElement(Element element);
-    bool isMovementPossible(const Element& element, Position newPosition);
+    void addElement(Element& element);
+    bool isMovementPossible(const Element& element, const Position& newPosition);
 	bool breakTest(const Element& element, set<int>& elementsToBreak);
 	void placeElement(const Element& element);
 	void removeElement(const Element& element);
+	Element* getElement(int elementId);
+
+	void getElementMetrics(ELEMENT_TYPE type, ELEMENT_ROTATION rotation, int & width, int & height);
 
 	static Board& get();
 };

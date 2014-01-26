@@ -9,7 +9,9 @@
 #include "element_shapes.h"
 #include "player.h"
 
-Board::Board()
+Board::Board():
+m_player1(PLAYER_ID::PLAYER_1),
+m_player2(PLAYER_ID::PLAYER_2)
 {
 	for (int i = 0; i < ELEMENT_TYPE::EMPTY; i++)
 	{
@@ -18,6 +20,9 @@ Board::Board()
 			m_elementTextures[i][j] = -1;
 		}
 	}
+
+	m_player1.setBoard(this);
+	m_player2.setBoard(this);
 }
 
 bool Board::init()
@@ -143,6 +148,11 @@ bool Board::init()
     m_elementMetrics[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP][0] = 6;
     m_elementMetrics[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP][1] = 6;
 
+	//break map
+	m_breakMap[LONG4] = SMALL2;
+	m_breakMap[CORNER3] = LONG4;
+	m_breakMap[SMALL2] = CORNER3;
+
 	return true;
 }
 
@@ -180,10 +190,37 @@ void Board::render()
 {
 	Engine::get().renderRectangle(m_backgroundTexture, 0, -1, 1, 1, -1);
 
-    testAllElements();
+    //testAllElements();
+	for (auto it = m_elements.begin(); it != m_elements.end(); it++)
+	{
+		renderElement(it->second);
+	}
 }
 
-void Board::addElement(Element element)
+void Board::doFrame()
+{
+	static LARGE_INTEGER frequency;
+	static LARGE_INTEGER perfStart;
+	static bool freqInit = false;
+
+	LARGE_INTEGER performanceCount;
+	QueryPerformanceCounter(&performanceCount);
+
+	if (!freqInit)
+	{
+		QueryPerformanceFrequency(&frequency);
+		perfStart = performanceCount;
+		freqInit = true;
+	}
+
+	float time = (float)((double) (performanceCount.QuadPart - perfStart.QuadPart) / (double) frequency.QuadPart);
+	m_player1.update(time);
+	m_player2.update(time);
+
+	render();
+}
+
+void Board::addElement(Element& element)
 {
     element.setId(++currentElementId);
     this->currentElement = element;
@@ -191,7 +228,7 @@ void Board::addElement(Element element)
 	m_elements[element.getId()] = element;
 }
 
-bool Board::isMovementPossible(const Element& element, Position newPosition)
+bool Board::isMovementPossible(const Element& element, const Position& newPosition)
 {
 	int width = m_elementMetrics[element.getType()][element.getRotation()][0];
 	for (int cell = 0; cell < width; cell++)
@@ -255,7 +292,23 @@ bool Board::breakTest(const Element& element, set<int>& elementsToBreak)
 
 void Board::removeElement(const Element& element)
 {
+	for (int h = 0; h < m_elementMetrics[element.getType()][element.getRotation()][1]; h++)
+	{
+		for (int w = 0; w < m_elementMetrics[element.getType()][element.getRotation()][0]; w++)
+		{
+			Position cellPos = element.getPosition();
+			cellPos.x += w;
+			cellPos.y += h;
 
+			if (elementShapes[element.getType()][element.getRotation()][3 - h][w])
+			{
+				assert(boardArray[cellPos.x][cellPos.y].m_elementId == element.getId());
+				boardArray[cellPos.x][cellPos.y].m_elementId = -1;
+			}
+		}
+	}
+
+	m_elements.erase(element.getId());
 }
 
 static Board* g_board = nullptr;
@@ -267,6 +320,22 @@ Board& Board::get()
 	}
 
 	return *g_board;
+}
+
+Element* Board::getElement(int elementId)
+{
+	if (m_elements.find(elementId) == m_elements.end())
+	{
+		return nullptr;
+	}
+
+	return &m_elements[elementId];
+}
+
+void Board::getElementMetrics(ELEMENT_TYPE type, ELEMENT_ROTATION rotation, int & width, int & height)
+{
+	width = m_elementMetrics[type][rotation][0];
+	height = m_elementMetrics[type][rotation][1];
 }
 
 void Board::testAllElements()
