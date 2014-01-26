@@ -122,26 +122,25 @@ bool Board::init()
     m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::LEFT][0] = 2;
     m_elementMetrics[ELEMENT_TYPE::SMALL2][ELEMENT_ROTATION::LEFT][1] = 1;
 
-
     // CUBE
-    m_targetTextures[CUBE_SPRITE_INDEX + 0] = Engine::get().loadTexture("../content/cube.tga", 1, 1);
-    m_targetTextures[CUBE_SPRITE_INDEX + 1] = Engine::get().loadTexture("../content/cube_sprite_1.tga", 1, 1);
-    m_targetTextures[CUBE_SPRITE_INDEX + 2] = Engine::get().loadTexture("../content/cube_sprite_2.tga", 1, 1);
-    m_targetTextures[CUBE_SPRITE_INDEX + 3] = Engine::get().loadTexture("../content/cube_sprite_3.tga", 1, 1);
-    m_targetTextures[CUBE_SPRITE_INDEX + 4] = Engine::get().loadTexture("../content/cube_sprite_4.tga", 1, 1);
-    m_targetTextures[CUBE_SPRITE_INDEX + 5] = Engine::get().loadTexture("../content/cube_sprite_5.tga", 1, 1);
-    m_targetTextures[CUBE_SPRITE_INDEX + 6] = Engine::get().loadTexture("../content/cube_sprite_6.tga", 1, 1);
-    m_targetTextures[CUBE_SPRITE_INDEX + 7] = Engine::get().loadTexture("../content/cube_sprite_7.tga", 1, 1);
+    m_elementTextures[ELEMENT_TYPE::CUBE][ELEMENT_ROTATION::UP] = Engine::get().loadTexture("../content/cube.tga", 1, 1);
+    if (m_elementTextures[ELEMENT_TYPE::CUBE][ELEMENT_ROTATION::UP] == -1)
+    {
+        return false;
+    }
+
+    m_elementMetrics[ELEMENT_TYPE::CUBE][ELEMENT_ROTATION::UP][0] = 6;
+    m_elementMetrics[ELEMENT_TYPE::CUBE][ELEMENT_ROTATION::UP][1] = 6;
 
     // PYRAMID
-    m_targetTextures[PYRAMID_SPRITE_INDEX + 0] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
-    m_targetTextures[PYRAMID_SPRITE_INDEX + 1] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
-    m_targetTextures[PYRAMID_SPRITE_INDEX + 2] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
-    m_targetTextures[PYRAMID_SPRITE_INDEX + 3] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
-    m_targetTextures[PYRAMID_SPRITE_INDEX + 4] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
-    m_targetTextures[PYRAMID_SPRITE_INDEX + 5] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
-    m_targetTextures[PYRAMID_SPRITE_INDEX + 6] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
-    m_targetTextures[PYRAMID_SPRITE_INDEX + 7] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_elementTextures[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    if (m_elementTextures[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP] == -1)
+    {
+        return false;
+    }
+
+    m_elementMetrics[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP][0] = 6;
+    m_elementMetrics[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP][1] = 6;
 
 	return true;
 }
@@ -175,20 +174,6 @@ void Board::renderElement(const Element& element)
 
 	Engine::get().renderRectangle(textureId, 0, topX, topY, bottomX, bottomY);
 }
-
-/* -> create target class
- 
-void Board::renderTarget(int spriteIndex, Position position)
-{
-    int textureId = m_targetTextures[spriteIndex];
-
-    float topX = elementLeft;
-    float topY = elementBottom + elementHeight;
-    float bottomX = elementLeft + elementWidth;
-    float bottomY = elementBottom;
-
-    Engine::get().renderRectangle(textureId, 0, topX, topY, bottomX, bottomY);
-}*/
 
 void Board::render()
 {
@@ -237,14 +222,36 @@ void Board::testAllElements()
     elements.push_back(Element(ELEMENT_TYPE::SMALL2, Position(3, 14), ELEMENT_ROTATION::DOWN));
     elements.push_back(Element(ELEMENT_TYPE::SMALL2, Position(5, 14), ELEMENT_ROTATION::LEFT));
     elements.push_back(Element(ELEMENT_TYPE::SMALL2, Position(8, 14), ELEMENT_ROTATION::RIGHT));
+    elements.push_back(Element(ELEMENT_TYPE::CUBE, Position(14, 20), ELEMENT_ROTATION::UP));
+    elements.push_back(Element(ELEMENT_TYPE::PYRAMID, Position(42, 20), ELEMENT_ROTATION::UP));
 
-    //for_each(elements.begin(), elements.end(), Board::renderElement);
     for (int i = 0; i < elements.size(); i++)
         renderElement(elements[i]);
     
 }
 
 /*
+void justSomething()
+{
+    // CUBE
+    m_targetTextures[CUBE_SPRITE_INDEX + 0] = Engine::get().loadTexture("../content/cube.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 1] = Engine::get().loadTexture("../content/cube_sprite_1.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 2] = Engine::get().loadTexture("../content/cube_sprite_2.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 3] = Engine::get().loadTexture("../content/cube_sprite_3.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 4] = Engine::get().loadTexture("../content/cube_sprite_4.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 5] = Engine::get().loadTexture("../content/cube_sprite_5.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 6] = Engine::get().loadTexture("../content/cube_sprite_6.tga", 1, 1);
+    m_targetTextures[CUBE_SPRITE_INDEX + 7] = Engine::get().loadTexture("../content/cube_sprite_7.tga", 1, 1);
+
+    // PYRAMID
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 0] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 1] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 2] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 3] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 4] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 5] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 6] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
+    m_targetTextures[PYRAMID_SPRITE_INDEX + 7] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
 = Engine::get().loadTexture("../content/block_1_sprite_1_pos1.tga, 1, 1);
 = Engine::get().loadTexture("../content/block_1_sprite_1_pos2.tga, 1, 1);
 = Engine::get().loadTexture("../content/block_1_sprite_2_pos1.tga, 1, 1);
@@ -279,4 +286,5 @@ void Board::testAllElements()
 = Engine::get().loadTexture("../content/block_3_sprite_3_pos2.tga, 1, 1);
 = Engine::get().loadTexture("../content/block_3_sprite_4_pos1.tga, 1, 1);
 = Engine::get().loadTexture("../content/block_3_sprite_4_pos2.tga, 1, 1);
+}
 */

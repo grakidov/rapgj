@@ -4,7 +4,7 @@
 #include "element.h"
 
 #define BOARD_WIDTH 60
-#define BOARD_HEIGHT 35
+#define BOARD_HEIGHT 32
 
 #define PLAYER_1_POSITION_X 15
 #define PLAYER_1_POSITION_Y 0
