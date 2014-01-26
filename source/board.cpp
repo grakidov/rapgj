@@ -264,15 +264,19 @@ bool Board::isMovementPossible(const Element& element, const Position& newPositi
 
 void Board::placeElement(const Element& element)
 {
-	for (int h = 0; h < m_elementMetrics[element.getType()][element.getRotation()][1]  ; h++)
+	int height = m_elementMetrics[element.getType()][element.getRotation()][1];
+	for (int h = 0; h < height; h++)
 	{
-		for (int w = 0; w < m_elementMetrics[element.getType()][element.getRotation()][0]; w++)
+		int width = m_elementMetrics[element.getType()][element.getRotation()][0];
+		for (int w = 0; w < width; w++)
 		{
 			Position cellPos = element.getPosition();
 			cellPos.x += w;
 			cellPos.y += h;
 
-			if (elementShapes[element.getType()][element.getRotation()][3-h][w] && boardArray[cellPos.x][cellPos.y].m_elementId != -1)
+			int shapeCell = elementShapes[element.getType()][element.getRotation()][3 - h][w];
+			int boardCell = boardArray[cellPos.x][cellPos.y].m_elementId;
+			if (shapeCell && boardCell == -1)
 			{
 				assert(boardArray[cellPos.x][cellPos.y].m_elementId == -1);
 				boardArray[cellPos.x][cellPos.y].m_elementId = element.getId();
@@ -283,7 +287,7 @@ void Board::placeElement(const Element& element)
 
 bool Board::breakTest(const Element& element, set<int>& elementsToBreak)
 {
-	if (element.getPosition().y == 0)
+	if (element.getPosition().y <= 1)
 	{
 		return false;
 	}
@@ -293,7 +297,10 @@ bool Board::breakTest(const Element& element, set<int>& elementsToBreak)
 	{
 		Position cellPos = element.getPosition();
 		cellPos.x += cell;
-		if (boardArray[cellPos.x][cellPos.y].m_elementId != -1)
+		cellPos.y -= 1;
+
+		int boardCell = boardArray[cellPos.x][cellPos.y].m_elementId;
+		if (boardCell != -1)
 		{
 			assert(m_elements.find(boardArray[cellPos.x][cellPos.y].m_elementId) != m_elements.end());
 			if (m_breakMap[element.getType()] != m_elements[boardArray[cellPos.x][cellPos.y].m_elementId].getType())
@@ -310,15 +317,18 @@ bool Board::breakTest(const Element& element, set<int>& elementsToBreak)
 
 void Board::removeElement(const Element& element)
 {
-	for (int h = 0; h < m_elementMetrics[element.getType()][element.getRotation()][1]; h++)
+	int height = m_elementMetrics[element.getType()][element.getRotation()][1];
+	for (int h = 0; h < height; h++)
 	{
-		for (int w = 0; w < m_elementMetrics[element.getType()][element.getRotation()][0]; w++)
+		int width = m_elementMetrics[element.getType()][element.getRotation()][0];
+		for (int w = 0; w < width; w++)
 		{
 			Position cellPos = element.getPosition();
 			cellPos.x += w;
 			cellPos.y += h;
 
-			if (elementShapes[element.getType()][element.getRotation()][3 - h][w])
+			int shapeCell = elementShapes[element.getType()][element.getRotation()][3 - h][w];
+			if (shapeCell)
 			{
 				assert(boardArray[cellPos.x][cellPos.y].m_elementId == element.getId());
 				boardArray[cellPos.x][cellPos.y].m_elementId = -1;
@@ -378,6 +388,18 @@ void Board::testAllElements()
     for (size_t i = 0; i < elements.size(); i++)
         renderElement(elements[i]);
     
+}
+
+void Board::setPlayerInput(int player, bool left, bool right, bool rot, bool down)
+{
+	if (player == 1)
+	{
+		m_player1.setInput(left, right, rot, false);
+	}
+	else
+	{
+		m_player2.setInput(left, right, rot, false);
+	}
 }
 
 /*

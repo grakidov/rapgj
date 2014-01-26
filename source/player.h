@@ -37,6 +37,7 @@ class Player
 private:
     PLAYER_ID m_playerId;
 	PLAYER_STATE m_state;
+	PLAYER_STATE m_prevState;
 	Board* m_board;
 
 	//fall state variables
@@ -63,6 +64,8 @@ public:
 
     Element generateElement();
 	void update(float time);
+
+	void setInput(bool left, bool right, bool rot, bool down);
 };
 
 #endif PLAYER_H

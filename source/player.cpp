@@ -11,7 +11,7 @@
 Player::Player(PLAYER_ID playerId) :
 m_breakWaitTime(1.0f),
 m_fallStepTime(0.5f),
-m_fallSpeed(4.0f),
+m_fallSpeed(2.0f),
 m_state(PLAYER_STATE::GENERATE)
 {
 	m_playerId = playerId;
@@ -64,6 +64,13 @@ Element Player::generateElement()
 	return Element(elementType, position, elementRotation);
 }
 
+void Player::setInput(bool left, bool right, bool rot, bool down)
+{
+	m_input[IN_LEFT] = left;
+	m_input[IN_RIGHT] = right;
+	m_input[IN_ROT] = rot;
+}
+
 void Player::update(float time)
 {
 	switch (m_state)
@@ -76,6 +83,7 @@ void Player::update(float time)
 		m_fallElementId = element.getId();
 		m_fallStartTime = time;
 		m_fallStartPos = element.getPosition();
+		m_prevState = m_state;
 		m_state = FALL;
 	}
 		break;
@@ -95,10 +103,20 @@ void Player::update(float time)
 		if (m_input[PLAYER_INPUT::IN_RIGHT])
 		{
 			newPos.x++;
+			m_fallStartPos.x = newPos.x;
+			//m_board->removeElement(*element);
+			element->setPosition(newPos);
+			//m_board->addElement(*element);
+			//m_board->placeElement(*element);
 		}
 		else if (m_input[PLAYER_INPUT::IN_LEFT])
 		{
 			newPos.x--;
+			m_fallStartPos.x = newPos.x;
+			//m_board->removeElement(*element);
+			element->setPosition(newPos);
+			//m_board->addElement(*element);
+			//m_board->placeElement(*element);
 		}
 		else if (m_input[PLAYER_INPUT::IN_ROT])
 		{
@@ -138,11 +156,14 @@ void Player::update(float time)
 				{
 					m_breakStartTime = time;
 					
+					m_prevState = m_state;
 					m_state = BREAK;
 				}
 				else
 				{
 					m_board->placeElement(*element);
+					m_prevState = m_state;
+					m_state = GENERATE;
 				}
 			}
 			else
@@ -151,15 +172,12 @@ void Player::update(float time)
 				if (newPos.y == 1)
 				{
 					m_board->placeElement(*element);
+					m_prevState = m_state;
 					m_state = GENERATE;
 				}
 			}
 		}
 
-		for (int i = 0; i < PLAYER_INPUT::IN_COUNT; i++)
-		{
-			m_input[i] = false;
-		}
 
 	}
 		break;
@@ -176,8 +194,18 @@ void Player::update(float time)
 				}
 			}
 
-			m_fallStepStartTime = time;
-			m_state = FALL_STEP;
+			//m_fallStepStartTime = time;
+			//m_state = FALL_STEP;
+
+			Element* element = m_board->getElement(m_fallElementId);
+			assert(element);
+			m_fallStartTime = time;
+			if (element)
+			{
+				m_fallStartPos = element->getPosition();
+			}
+			m_prevState = m_state;
+			m_state = FALL;
 		}
 	}
 		break;
@@ -192,24 +220,32 @@ void Player::update(float time)
 			{
 				Position newPos = element->getPosition();
 				newPos.y -= 1;
-				if (newPos.y > 1)
+				if (newPos.y >= 1)
 				{
+					element->setPosition(newPos);
 					m_board->breakTest(*element, m_elementsToBreak);
 				}
 
 				if (m_elementsToBreak.size())
 				{
 					m_breakStartTime = time;
+					m_prevState = m_state;
 					m_state = BREAK;
 				}
 				else
 				{
 					m_board->placeElement(*element);
+					m_prevState = m_state;
 					m_state = GENERATE;
 				}
 			}
 		}
 	}
 		break;
+	}
+
+	for (int i = 0; i < PLAYER_INPUT::IN_COUNT; i++)
+	{
+		m_input[i] = false;
 	}
 }
