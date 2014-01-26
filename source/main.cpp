@@ -1,6 +1,8 @@
 #include "ra_pch.h"
+
 #include "settings.h"
 #include "engine.h"
+
 #include "board.h"
 
 Settings g_Settings;
@@ -117,6 +119,9 @@ int main(int argc, char* argv[])
 	Board::get().init();
 
 	cout << "entering main loop..." << endl;
+
+    srand((unsigned)time(NULL));
+
 	glutMainLoop();
 	return 0;
 }

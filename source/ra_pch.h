@@ -8,6 +8,8 @@
 #include <set>
 #include <assert.h>
 
+#include <time.h>
+
 #include <gl3w.h>
 #include <freeglut.h>
 #include <FreeImage.h>

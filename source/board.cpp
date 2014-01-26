@@ -7,6 +7,7 @@
 #include "engine.h"
 
 #include "element_shapes.h"
+#include "player.h"
 
 Board::Board()
 {
