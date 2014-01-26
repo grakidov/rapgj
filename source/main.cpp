@@ -32,7 +32,25 @@ void PassiveMotionFunc(int x, int y)
 
 void KeyboardFunc(unsigned char key, int x, int y)
 {
-
+	bool left1, right1, left2, right2;
+	left1 = right1 = left2 = right2 = false;
+	switch (key)
+	{
+	case 'a':
+		left1 = true;
+		break;
+	case 'd':
+		right1 = true;
+		break;
+	case 'j':
+		left2 = true;
+		break;
+	case 'l':
+		right2 = true;
+		break;
+	}
+	Board::get().setPlayerInput(1, left1, right1, false, false);
+	Board::get().setPlayerInput(2, left2, right2, false, false);
 }
 
 void MouseFunc(int b, int s, int x, int y)

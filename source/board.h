@@ -76,6 +76,8 @@ public:
 
 	void getElementMetrics(ELEMENT_TYPE type, ELEMENT_ROTATION rotation, int & width, int & height);
 
+	void setPlayerInput(int player, bool left, bool right, bool rot, bool down);
+
 	static Board& get();
 };
 
