@@ -152,7 +152,7 @@ void Board::clear()
     {
         for (int column = 0; column < BOARD_HEIGHT; column++)
         {
-            boardArray[row][column] = Element();
+			boardArray[row][column] = Cell();
         }
     }
 }
@@ -187,11 +187,22 @@ void Board::addElement(Element element)
 {
     element.setId(++currentElementId);
     this->currentElement = element;
+
+	m_elements[element.getId()] = element;
 }
 
 bool Board::isMovementPossible(Element element, Position newPosition)
 {
- 
+	int width = m_elementMetrics[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT][0];
+	for (int cell = 0; cell < width; cell++)
+	{
+		Position cellPos = newPosition;
+		cellPos.x += cell;
+		if (elementShapes[element.getType()][element.getRotation()][3][cell] && boardArray[cellPos.x][cellPos.y].m_elementId != -1)
+		{
+			return false;
+		}
+	}
 
     return true;
 }
@@ -226,13 +237,7 @@ void Board::testAllElements()
     elements.push_back(Element(ELEMENT_TYPE::CUBE, Position(14, 20), ELEMENT_ROTATION::UP));
     elements.push_back(Element(ELEMENT_TYPE::PYRAMID, Position(42, 20), ELEMENT_ROTATION::UP));
 
-    Player player_1(PLAYER_ID::PLAYER_1);
-    elements.push_back(player_1.generateElement());
-
-    Player player_2(PLAYER_ID::PLAYER_2);
-    elements.push_back(player_2.generateElement());
-
-    for (unsigned int i = 0; i < elements.size(); i++)
+    for (size_t i = 0; i < elements.size(); i++)
         renderElement(elements[i]);
     
 }

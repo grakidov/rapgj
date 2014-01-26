@@ -40,13 +40,11 @@ void MouseFunc(int b, int s, int x, int y)
 	
 }
 
-//int testTextId = -1;
 void DisplayFunc(void)
 {
 	glClearColor(1.0f, .0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//Engine::get().renderRectangle(testTextId, 0, 0, 1, 1, 0);
 	Board::get().render();
 	glutSwapBuffers();
 }
@@ -110,14 +108,7 @@ int main(int argc, char* argv[])
 		std::cout << "ERROR: OpenGL 3.3 not supported" << std::endl;
 		return -1;
 	}
-
-	//GLint numVtxUniformBlocks = 0;
-	//GLint numFragUniformBlocks = 0;
-	//GLint maxUniformBlockSize = 0;
-	//glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &numVtxUniformBlocks);
-	//glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &numFragUniformBlocks);
-	//glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &maxUniformBlockSize);
-
+	
 	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 
 	if (!Engine::get().init())
@@ -125,16 +116,7 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-
-	//testTextId = Engine::get().loadTexture("../content/Background.tga", 1, 1);
 	Board::get().init();
-
-	//g_cameraController.OnScreenReshape(g_Settings.GetWindowWidth(), g_Settings.GetWindowHeight());
-	/*if(!LoadRC())
-	{
-		ClearRC();
-		return -1;
-	}*/
 
 	cout << "entering main loop..." << endl;
 

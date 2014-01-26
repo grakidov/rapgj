@@ -18,9 +18,20 @@
 #define CUBE_SPRITE_INDEX 0
 #define PYRAMID_SPRITE_INDEX 8
 
+
+class Cell
+{
+public:
+	int m_elementId;
+	Cell()
+	{
+		m_elementId = -1;
+	}
+};
+
 class Board {
 private:
-    Element boardArray[BOARD_WIDTH][BOARD_HEIGHT];
+	Cell boardArray[BOARD_WIDTH][BOARD_HEIGHT];
 
     Element currentElement;
     int currentElementId = 0; // 0 = empty tile
@@ -28,9 +39,13 @@ private:
 	int m_backgroundTexture;
 	int m_elementTextures[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT];
 	int m_elementMetrics[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT][2];
+	//bool m_elementOccupation[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT][4];
+
 
     int m_targetTextures[TARGET_SPRITE_COUNT];
     int m_targetMetrics[TARGET_SPRITE_COUNT];
+
+	map<int, Element> m_elements;
 
 	void renderElement();
 
