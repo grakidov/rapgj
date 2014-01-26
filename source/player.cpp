@@ -11,6 +11,7 @@
 Player::Player(PLAYER_ID playerId) :
 m_breakWaitTime(1.0f),
 m_fallStepTime(0.5f),
+m_fallSpeed(1.0f),
 m_state(PLAYER_STATE::GENERATE)
 {
 	m_playerId = playerId;
@@ -139,6 +140,15 @@ void Player::update(float time)
 					m_board->placeElement(*element);
 				}
 			}
+			else
+			{
+				element->setPosition(newPos);
+				if (newPos.y == 1)
+				{
+					m_board->placeElement(*element);
+					m_state = GENERATE;
+				}
+			}
 		}
 
 		for (int i = 0; i < PLAYER_INPUT::IN_COUNT; i++)
@@ -190,6 +200,7 @@ void Player::update(float time)
 				else
 				{
 					m_board->placeElement(*element);
+					m_state = GENERATE;
 				}
 			}
 		}
