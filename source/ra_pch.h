@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <set>
 #include <assert.h>
 
 #include <gl3w.h>

@@ -49,7 +49,7 @@ public:
     Element();
 	Element(ELEMENT_TYPE type, Position position, ELEMENT_ROTATION rotation);
 
-    int getId();
+    int getId() const;
     void setId(int id);
 
     Position getPosition() const;

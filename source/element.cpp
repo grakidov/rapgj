@@ -13,7 +13,7 @@ Element::Element(ELEMENT_TYPE type, Position position, ELEMENT_ROTATION rotation
     m_rotation = rotation;
 }
 
-int Element::getId()
+int Element::getId() const
 {
     return m_id;
 }

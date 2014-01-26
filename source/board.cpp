@@ -190,9 +190,9 @@ void Board::addElement(Element element)
 	m_elements[element.getId()] = element;
 }
 
-bool Board::isMovementPossible(Element element, Position newPosition)
+bool Board::isMovementPossible(const Element& element, Position newPosition)
 {
-	int width = m_elementMetrics[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT][0];
+	int width = m_elementMetrics[element.getType()][element.getRotation()][0];
 	for (int cell = 0; cell < width; cell++)
 	{
 		Position cellPos = newPosition;
@@ -204,6 +204,57 @@ bool Board::isMovementPossible(Element element, Position newPosition)
 	}
 
     return true;
+}
+
+void Board::placeElement(const Element& element)
+{
+	for (int h = 0; h < m_elementMetrics[element.getType()][element.getRotation()][1]  ; h++)
+	{
+		for (int w = 0; w < m_elementMetrics[element.getType()][element.getRotation()][0]; w++)
+		{
+			Position cellPos = element.getPosition();
+			cellPos.x += w;
+			cellPos.y += h;
+
+			if (elementShapes[element.getType()][element.getRotation()][3-h][w] && boardArray[cellPos.x][cellPos.y].m_elementId != -1)
+			{
+				assert(boardArray[cellPos.x][cellPos.y].m_elementId == -1);
+				boardArray[cellPos.x][cellPos.y].m_elementId = element.getId();
+			}
+		}
+	}
+}
+
+bool Board::breakTest(const Element& element, set<int>& elementsToBreak)
+{
+	if (element.getPosition().y == 0)
+	{
+		return false;
+	}
+
+	int width = m_elementMetrics[element.getType()][element.getRotation()][0];
+	for (int cell = 0; cell < width; cell++)
+	{
+		Position cellPos = element.getPosition();
+		cellPos.x += cell;
+		if (boardArray[cellPos.x][cellPos.y].m_elementId != -1)
+		{
+			assert(m_elements.find(boardArray[cellPos.x][cellPos.y].m_elementId) != m_elements.end());
+			if (m_breakMap[element.getType()] != m_elements[boardArray[cellPos.x][cellPos.y].m_elementId].getType())
+			{
+				return false;
+			}
+
+			elementsToBreak.insert(boardArray[cellPos.x][cellPos.y].m_elementId);
+		}
+	}
+
+	return true;
+}
+
+void Board::removeElement(const Element& element)
+{
+
 }
 
 static Board* g_board = nullptr;

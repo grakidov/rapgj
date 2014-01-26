@@ -40,6 +40,7 @@ private:
 	int m_elementTextures[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT];
 	int m_elementMetrics[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT][2];
 	//bool m_elementOccupation[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT][4];
+	ELEMENT_TYPE m_breakMap[ELEMENT_TYPE::EMPTY];
 
 
     int m_targetTextures[TARGET_SPRITE_COUNT];
@@ -62,7 +63,10 @@ public:
     void renderTarget(int spriteIndex, Position position);
 
     void addElement(Element element);
-    bool isMovementPossible(Element element, Position newPosition);
+    bool isMovementPossible(const Element& element, Position newPosition);
+	bool breakTest(const Element& element, set<int>& elementsToBreak);
+	void placeElement(const Element& element);
+	void removeElement(const Element& element);
 
 	static Board& get();
 };
