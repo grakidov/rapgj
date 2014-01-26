@@ -1,13 +1,5 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
-/*
-enum ELEMENT_TYPE
-{
-    LONG4,
-    CORNER3,
-    SMALL2,
-    EMPTY
-};*/
 
 enum ELEMENT_TYPE
 {

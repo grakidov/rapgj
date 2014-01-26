@@ -138,6 +138,12 @@ bool Board::init()
     m_elementMetrics[ELEMENT_TYPE::CUBE][ELEMENT_ROTATION::UP][0] = 6;
     m_elementMetrics[ELEMENT_TYPE::CUBE][ELEMENT_ROTATION::UP][1] = 6;
 
+    Position nonPlayableElementsPosition;
+    nonPlayableElementsPosition.x = CUBE_ELEMENT_POSITION_X;
+    nonPlayableElementsPosition.y = CUBE_ELEMENT_POSITION_Y;
+
+    m_nonPlayableElements.push_back(Element(ELEMENT_TYPE::CUBE, nonPlayableElementsPosition, ELEMENT_ROTATION::UP));
+
     // PYRAMID
     m_elementTextures[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP] = Engine::get().loadTexture("../content/pyramid.tga", 1, 1);
     if (m_elementTextures[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP] == -1)
@@ -147,6 +153,11 @@ bool Board::init()
 
     m_elementMetrics[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP][0] = 6;
     m_elementMetrics[ELEMENT_TYPE::PYRAMID][ELEMENT_ROTATION::UP][1] = 6;
+
+    nonPlayableElementsPosition.x = PYRAMID_ELEMENT_POSITION_X;
+    nonPlayableElementsPosition.y = PYRAMID_ELEMENT_POSITION_Y;
+
+    m_nonPlayableElements.push_back(Element(ELEMENT_TYPE::PYRAMID, nonPlayableElementsPosition, ELEMENT_ROTATION::UP));
 
 	//break map
 	m_breakMap[LONG4] = SMALL2;
@@ -191,6 +202,10 @@ void Board::render()
 	Engine::get().renderRectangle(m_backgroundTexture, 0, -1, 1, 1, -1);
 
     //testAllElements();
+
+    for (size_t i = 0; i < m_nonPlayableElements.size(); i++)
+        renderElement(m_nonPlayableElements[i]);
+
 	for (auto it = m_elements.begin(); it != m_elements.end(); it++)
 	{
 		renderElement(it->second);
@@ -199,6 +214,9 @@ void Board::render()
 
 void Board::doFrame()
 {
+    // RANDOM number
+    srand((unsigned)time(NULL));
+
 	static LARGE_INTEGER frequency;
 	static LARGE_INTEGER perfStart;
 	static bool freqInit = false;

@@ -11,7 +11,7 @@
 Player::Player(PLAYER_ID playerId) :
 m_breakWaitTime(1.0f),
 m_fallStepTime(0.5f),
-m_fallSpeed(1.0f),
+m_fallSpeed(4.0f),
 m_state(PLAYER_STATE::GENERATE)
 {
 	m_playerId = playerId;
@@ -23,25 +23,30 @@ Element Player::generateElement()
 	int weight = rand() % 5;
 	ELEMENT_TYPE elementType;
 
-	switch (weight)
-	{
-	case 0:
-		elementType = ELEMENT_TYPE::LONG4;
-		break;
-	case 1:
-	case 2:
-		elementType = ELEMENT_TYPE::CORNER3;
-		break;
-	case 3:
-	case 4:
-		elementType = ELEMENT_TYPE::SMALL2;
-		break;
-	}
+    ELEMENT_ROTATION elementRotation = ELEMENT_ROTATION::RIGHT;
+
+    switch (weight)
+    {
+    case 0:
+        elementType = ELEMENT_TYPE::LONG4;
+        elementRotation = ELEMENT_ROTATION::RIGHT;
+        break;
+    case 1:
+    case 2:
+        elementType = ELEMENT_TYPE::CORNER3;
+        elementRotation = ELEMENT_ROTATION::RIGHT;
+        break;
+    case 3:
+    case 4:
+        elementType = ELEMENT_TYPE::SMALL2;
+        elementRotation = ELEMENT_ROTATION::RIGHT;
+        break;
+    }
 
 	cout << weight << " ";
 
 	// Generate a number between ELEMENT_TYPE::UP and ELEMENT_TYPE::LEFT
-	ELEMENT_ROTATION elementRotation = static_cast<ELEMENT_ROTATION>(rand() % (ELEMENT_ROTATION::LEFT + 1) + ELEMENT_ROTATION::UP);
+	//ELEMENT_ROTATION elementRotation = static_cast<ELEMENT_ROTATION>(rand() % (ELEMENT_ROTATION::LEFT + 1) + ELEMENT_ROTATION::UP);
 
 	Position position;
 

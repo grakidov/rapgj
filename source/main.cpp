@@ -127,8 +127,6 @@ int main(int argc, char* argv[])
 
 	cout << "entering main loop..." << endl;
 
-    srand((unsigned)time(NULL));
-
 	glutMainLoop();
 	return 0;
 }

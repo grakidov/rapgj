@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\animatedElement.cpp" />
     <ClCompile Include="..\engine.cpp" />
     <ClCompile Include="..\board.cpp" />
     <ClCompile Include="..\element.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="..\settings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\animatedElement.h" />
     <ClInclude Include="..\element_shapes.h" />
     <ClInclude Include="..\engine.h" />
     <ClInclude Include="..\board.h" />

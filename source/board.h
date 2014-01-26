@@ -19,6 +19,11 @@
 #define CUBE_SPRITE_INDEX 0
 #define PYRAMID_SPRITE_INDEX 8
 
+#define CUBE_ELEMENT_POSITION_X 14
+#define CUBE_ELEMENT_POSITION_Y 20
+#define PYRAMID_ELEMENT_POSITION_X 42
+#define PYRAMID_ELEMENT_POSITION_Y 20
+
 
 class Cell
 {
@@ -36,6 +41,8 @@ private:
 
     Element currentElement;
     int currentElementId = 0; // 0 = empty tile
+
+    std::vector<Element> m_nonPlayableElements;
 
 	int m_backgroundTexture;
 	int m_elementTextures[ELEMENT_TYPE::EMPTY][ELEMENT_ROTATION::COUNT];
